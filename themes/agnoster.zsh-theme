@@ -187,7 +187,17 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue black '%~'
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    prompt_segment black blue
+    echo -n '🖿 '
+    echo -n $(basename $(git rev-parse --show-toplevel))
+    if [ $(git rev-parse --show-prefix) ]; then
+      prompt_segment blue black
+      echo -n $(git rev-parse --show-prefix)
+    fi
+  else
+    prompt_segment blue black "%30<...<%~%<<"
+  fi
 }
 
 # Virtualenv: current working virtualenv
