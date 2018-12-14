@@ -69,7 +69,7 @@ alias gcam='git commit -a -m'
 alias gcsm='git commit -s -m'
 alias gcb='git checkout -b'
 alias gcf='git config --list'
-alias gcl='git clone --recursive'
+alias gcl='git clone --recurse-submodules'
 alias gclean='git clean -fd'
 alias gpristine='git reset --hard && git clean -dfx'
 alias gcm='git checkout master'
@@ -86,7 +86,9 @@ alias gcs='git commit -S'
 
 alias gd='git diff'
 alias gdca='git diff --cached'
+alias gdcw='git diff --cached --word-diff'
 alias gdct='git describe --tags `git rev-list --tags --max-count=1`'
+alias gds='git diff --staged'
 alias gdt='git diff-tree --no-commit-id --name-only -r'
 alias gdw='git diff --word-diff'
 
@@ -106,6 +108,10 @@ alias gga='git gui citool --amend'
 ggf() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git push --force origin "${b:=$1}"
+}
+ggfl() {
+[[ "$#" != 1 ]] && local b="$(git_current_branch)"
+git push --force-with-lease origin "${b:=$1}"
 }
 compdef _git ggf=git-checkout
 
@@ -192,6 +198,7 @@ alias gmom='git merge origin/master'
 alias gmt='git mergetool --no-prompt'
 alias gmtvim='git mergetool --no-prompt --tool=vimdiff'
 alias gmum='git merge upstream/master'
+alias gma='git merge --abort'
 
 alias gp='git push'
 alias gpd='git push --dry-run'
@@ -220,6 +227,7 @@ alias grv='git remote -v'
 
 alias gsb='git status -sb'
 alias gsd='git svn dcommit'
+alias gsh='git show'
 alias gsi='git submodule init'
 alias gsps='git show --pretty=short --show-signature'
 alias gsr='git svn rebase'
@@ -233,6 +241,7 @@ alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash show --text'
+alias gstall='git stash --all'
 alias gsu='git submodule update'
 
 alias gts='git tag -s'
@@ -242,6 +251,8 @@ alias gunignore='git update-index --no-assume-unchanged'
 alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
 alias gup='git pull --rebase'
 alias gupv='git pull --rebase -v'
+alias gupa='git pull --rebase --autostash'
+alias gupav='git pull --rebase --autostash -v'
 alias glum='git pull upstream master'
 
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
